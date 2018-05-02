@@ -1,0 +1,86 @@
+CREATE TABLE `msg_subscribe_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_id` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '开发者ID',
+  `original_id` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '原始id',
+  `is_deleted` smallint(4) NOT NULL DEFAULT '1' COMMENT '1正常 2删除',
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `tid` int(11) NOT NULL DEFAULT '0' COMMENT '分类id',
+  `sid` int(11) NOT NULL DEFAULT '0' COMMENT '学校id',
+  `subscribe_type` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '是否订阅 1.定阅 2.取消订阅',
+  `type` tinyint(4) unsigned NOT NULL DEFAULT '2' COMMENT '1:保留，2:微信，3支付宝',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `msgcontent` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '模板id',
+  `tid` int(10) NOT NULL DEFAULT '1' COMMENT '模板类型id',
+  `sid` int(10) NOT NULL DEFAULT '1' COMMENT '学校id',
+  `user_id` int(10) NOT NULL COMMENT '用户id',
+  `user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户名',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '模板名称',
+  `imgurl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '图片',
+  `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '模板内容',
+  `remarks` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注信息',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0：待发布，1上架，2下架',
+  `phone` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '发布人手机号',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `msgopinion` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL COMMENT '用户id',
+  `user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户名',
+  `content` text COLLATE utf8_unicode_ci NOT NULL COMMENT '意见内容',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `msgschool` (
+  `sid` int(10) NOT NULL AUTO_INCREMENT,
+  `schoolname` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '学校名称',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `msgtype` (
+  `tid` int(10) NOT NULL AUTO_INCREMENT,
+  `msgtype` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '分类',
+  `parenttype` tinyint(4) NOT NULL DEFAULT '1' COMMENT '父级分类',
+  `author` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '添加人',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`tid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `uc_oauth` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `open_id` varchar(255) DEFAULT NULL,
+  `unionid` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `headimgurl` varchar(255) DEFAULT NULL COMMENT '头像',
+  `type` tinyint(4) DEFAULT '1' COMMENT '1.保留，2.微信 3.支付宝',
+  `app_id` varchar(50) NOT NULL DEFAULT '' COMMENT '应用ID',
+  `original_id` varchar(255) NOT NULL DEFAULT '' COMMENT '源id',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_subscribe` tinyint(4) DEFAULT '0' COMMENT '是否关注',
+  `subscribed_at` int(11) DEFAULT NULL COMMENT '关注时间',
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`app_id`) USING BTREE,
+  KEY `IDX_LAST_UPDATE` (`last_update`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `mobile` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
