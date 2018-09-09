@@ -69,7 +69,20 @@ messagepush/routes/web.php/wap/wechatsendtmp
 接口信息：
 messagepush/routes/api.php/里面（注释里面都有）
 ```
+### 消息队列
+```
+用户订阅了标签 别人发布改标签信息的时候触发 需要配置redis
+redis的配置在.env里面
+job目录为：messagepush/Jobs/SendWechatTmp.php
 
+执行命令 php artisan queue:listen(常驻进程)
+```
+
+### h5转小程序
+```
+1：需要修改授权登陆那块
+2：把web下的接口转移到api下即可（api下面已经有一部分）
+```
 
 
 
