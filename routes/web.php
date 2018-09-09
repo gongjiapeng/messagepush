@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin','middleware' => 'auth'], function()
 {
-	  Route::get('/', 'MsgContentController@index');
+	  Route::get('/', 'MsgContentController@getContentList');
     //获取信息列表
   	Route::get('/contentlist', 'MsgContentController@getContentList');
     //填加信息
